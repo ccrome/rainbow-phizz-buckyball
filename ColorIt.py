@@ -785,6 +785,11 @@ def write_adjacency_matrix(polygon_name, file_name):
                    '-Tpng',
                    '-o', "%s.png" % fn,
                    fn]
-            subprocess.call(cmd)
+            try:
+                subprocess.call(cmd)
+            except Exception:
+                print "ERROR:  you probably don't have neato installed.  'sudo apt-get install graphviz' to fix this error."
+                exit(-1)
+
         
 normalize(polygons)
