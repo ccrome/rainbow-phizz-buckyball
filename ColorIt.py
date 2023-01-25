@@ -1,6 +1,7 @@
 from math import sqrt
 from numpy  import *
 import subprocess
+import functools
 
 torus_5_10 = {
     "points" :
@@ -185,20 +186,20 @@ torus_5_10 = {
 
 icosohedron = {
     "points" :
-	[
-	 [0.0       ,  0.0     ,   2.0],
-	 [1.788854  ,  0.000000,   0.894427],
-	 [0.552786  ,  1.701302,   0.894427],
-	 [-1.447214 ,  1.051462,   0.894427],
-	 [-1.447214 , -1.051462,   0.894427],
-	 [0.552786  , -1.701302,   0.894427],
-	 [1.447214  ,  1.051462,  -0.894427],
-	 [-0.552786 ,  1.701302,  -0.894427],
-	 [-1.788854 ,  0.000000,  -0.894427],
-	 [-0.552786 , -1.701302,  -0.894427],
-	 [1.447214  , -1.051462,  -0.894427],
-	 [0.0       ,  0.0     ,  -2.0],
-	 ],
+        [
+         [0.0       ,  0.0     ,   2.0],
+         [1.788854  ,  0.000000,   0.894427],
+         [0.552786  ,  1.701302,   0.894427],
+         [-1.447214 ,  1.051462,   0.894427],
+         [-1.447214 , -1.051462,   0.894427],
+         [0.552786  , -1.701302,   0.894427],
+         [1.447214  ,  1.051462,  -0.894427],
+         [-0.552786 ,  1.701302,  -0.894427],
+         [-1.788854 ,  0.000000,  -0.894427],
+         [-0.552786 , -1.701302,  -0.894427],
+         [1.447214  , -1.051462,  -0.894427],
+         [0.0       ,  0.0     ,  -2.0],
+         ],
     }
 
 dodecahedron = {
@@ -563,9 +564,9 @@ def get_edges(polygon_name):
     edges = []
     npoints = len(points)
     for point in range(npoints):
-	color = correct(points[point])
-	# go through each point adjacent to this one, and print it's number&color
-	for other_point in adjacency[point]:
+        color = correct(points[point])
+        # go through each point adjacent to this one, and print it's number&color
+        for other_point in adjacency[point]:
             if (point < other_point):
                 p, op = point, other_point
             else:
@@ -588,12 +589,12 @@ def color_string(color):
 
 def print_edges(edges):
     for edge in edges:
-	print " ".join(edge)
+        print (" ".join(edge))
 
 def correct(p):
     result = []
     for x in p:
-	result.append(int(x * 255))
+        result.append(int(x * 255))
     return result;
 
 def find_adjacency_matrix(points):
@@ -602,11 +603,11 @@ def find_adjacency_matrix(points):
     distance_matrix = zeros((npoints, npoints))
     minimum_distance = -1
     for x in range(npoints):
-	for y in range(npoints):
-	    if (x != y):
-		dist = distance(points[x], points[y])
-		if (minimum_distance < 0):
-		    minimum_distance = dist;
+        for y in range(npoints):
+            if (x != y):
+                dist = distance(points[x], points[y])
+                if (minimum_distance < 0):
+                    minimum_distance = dist;
                 else:
                     if (dist < minimum_distance and dist != 0):
                         minimum_distance = dist
@@ -614,13 +615,13 @@ def find_adjacency_matrix(points):
     maximum_distance = minimum_distance * 1.2
     result = []
     for x in range(npoints):
-	adjacent_points = []
-	for y in range(npoints):
-	    if (x != y):
-		if (distance_matrix[x][y] >= minimum_distance and
-		    distance_matrix[x][y] <= maximum_distance):
-		    adjacent_points.append(y)
-	result.append(adjacent_points)
+        adjacent_points = []
+        for y in range(npoints):
+            if (x != y):
+                if (distance_matrix[x][y] >= minimum_distance and
+                    distance_matrix[x][y] <= maximum_distance):
+                    adjacent_points.append(y)
+        result.append(adjacent_points)
     return result;
 
 def distance(point1, point2):
@@ -638,7 +639,7 @@ def scale_and_translate(points):
     minx, miny, minz =  1000000, 1000000, 1000000
     npoints = len(points)
     for point in range(npoints):
-	x, y, z = points[point][0], points[point][1], points[point][2]
+        x, y, z = points[point][0], points[point][1], points[point][2]
         if (x > maxx):
             maxx = x 
         if (y > maxy):
@@ -667,15 +668,15 @@ def scale_and_translate(points):
 
     result = []
     for point in range(npoints):
-	x, y, z = points[point][0], points[point][1], points[point][2]
-	x = x + deltax
-	y = y + deltay
-	z = z + deltaz
-	x = x * scale
-	y = y * scale
-	z = z * scale
-	newpoint = [x, y, z]
-	result.append(newpoint)
+        x, y, z = points[point][0], points[point][1], points[point][2]
+        x = x + deltax
+        y = y + deltay
+        z = z + deltaz
+        x = x * scale
+        y = y * scale
+        z = z * scale
+        newpoint = [x, y, z]
+        result.append(newpoint)
     return result
 
 # put the polygon in the + + + octant
@@ -683,8 +684,8 @@ def scale_and_translate(points):
 # and the maximum coordinate is 1.
 def normalize(polygons):
     for polygon in polygons:
-	polygons[polygon]['adjacency'] = find_adjacency_matrix(polygons[polygon]['points'])
-	polygons[polygon]['points']    = scale_and_translate  (polygons[polygon]['points'])
+        polygons[polygon]['adjacency'] = find_adjacency_matrix(polygons[polygon]['points'])
+        polygons[polygon]['points']    = scale_and_translate  (polygons[polygon]['points'])
 
 
 def numeric(a, b):
@@ -711,18 +712,18 @@ def write_adjacency_matrix(polygon_name, file_name):
     fh = open(file_name, "w")
     result = None
     if fh:
-	fh.write("# Adjacency matrix for the %s polytype.\n" % polygon_name);
-	if (len(matrix) > 0):
-	    count = 0
+        fh.write("# Adjacency matrix for the %s polytype.\n" % polygon_name);
+        if (len(matrix) > 0):
+            count = 0
             for line in matrix:
-		fh.write("%d: %s\n"  % (count, line))
+                fh.write("%d: %s\n"  % (count, line))
                 count = count + 1
-	else:
-	    result = "Error in ColorIt::write_adjacency_matrix.  Couldn't get the matrix for some reason.";
-	    print fh, result;
+        else:
+            result = "Error in ColorIt::write_adjacency_matrix.  Couldn't get the matrix for some reason.";
+            print (fh, result)
         fh.close()
     else:
-	result = "Couldn't open %s for writing." % file_name;
+        result = "Couldn't open %s for writing." % file_name;
         return
     fn_neato1 = "%s_1.neato" % file_name
     fn_neato2 = "%s_2.neato" % file_name
@@ -745,7 +746,7 @@ def write_adjacency_matrix(polygon_name, file_name):
         
         fh_neato1.write("graph G1 {\n")
         tracker2 = {}
-        for x in sorted(tracker.keys(), cmp=numeric):
+        for x in sorted(tracker.keys(), key=functools.cmp_to_key(numeric)):
             n1, n2, s = tracker[x]
             tracker2[n1] = 1
             tracker2[n2] = 1
@@ -764,7 +765,7 @@ def write_adjacency_matrix(polygon_name, file_name):
  
         fh_neato2.write("graph G1 {\n")
         tracker2 = {}
-        for x in sorted(tracker.keys(), cmp=numeric):
+        for x in sorted(tracker.keys(), key=functools.cmp_to_key(numeric)):
             n1, n2, s = tracker[x]
             tracker2[n1] = 1
             tracker2[n2] = 1
@@ -788,7 +789,7 @@ def write_adjacency_matrix(polygon_name, file_name):
             try:
                 subprocess.call(cmd)
             except Exception:
-                print "ERROR:  you probably don't have neato installed.  'sudo apt-get install graphviz' to fix this error."
+                print ("ERROR:  you probably don't have neato installed.  'sudo apt-get install graphviz' to fix this error.")
                 exit(-1)
 
         

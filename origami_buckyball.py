@@ -10,7 +10,7 @@ def side_is_okay(side):
         if (side == s):
             side_is_ok = 1
     if (not side_is_ok):
-        raise Exception("Bad 'side' chosen: %s, legal sides are" % side), legal_sides
+        raise Exception(f"Bad 'side' chosen: {sides}, legal sides are {legal_sides}")
 
 def bucky(polygon, square_size, square_margin, fill_type='face', margin = {'left' : 0.5, 'right' : 0.5, 'top' : 0.5, 'bottom' : 0.5}, 
           sheet_size=[8.5, 11],
@@ -23,15 +23,15 @@ def bucky(polygon, square_size, square_margin, fill_type='face', margin = {'left
     all_blocks = ColorIt.get_edges(polygon)
     ColorIt.write_adjacency_matrix(polygon, "%s_adjacency_matrix.txt" % polygon)
     face_polygons = [
-	[ [0, 0], [0, 1], [2, 1], [1, 0], [0, 0] ], 
-	[ [1, 0], [2, 1], [3, 1], [2, 0], [1, 0] ],
-	[ [2, 0], [3, 1], [4, 1], [4, 0], [2, 0] ],
-	[ [0, 4-0], [0, 4-1], [2, 4-1], [1, 4-0], [0, 4-0] ], 
-	[ [1, 4-0], [2, 4-1], [3, 4-1], [2, 4-0], [1, 4-0] ],
-	[ [2, 4-0], [3, 4-1], [4, 4-1], [4, 4-0], [2, 4-0] ],
+        [ [0, 0], [0, 1], [2, 1], [1, 0], [0, 0] ], 
+        [ [1, 0], [2, 1], [3, 1], [2, 0], [1, 0] ],
+        [ [2, 0], [3, 1], [4, 1], [4, 0], [2, 0] ],
+        [ [0, 4-0], [0, 4-1], [2, 4-1], [1, 4-0], [0, 4-0] ], 
+        [ [1, 4-0], [2, 4-1], [3, 4-1], [2, 4-0], [1, 4-0] ],
+        [ [2, 4-0], [3, 4-1], [4, 4-1], [4, 4-0], [2, 4-0] ],
         ]
     gradient_polygons = [
-	[ [0, 0], [4, 0], [4, 1.1], [0, 1.1], [0, 0] ], 
+        [ [0, 0], [4, 0], [4, 1.1], [0, 1.1], [0, 0] ], 
         ]
     sheet_height = sheet_size[1]
     if (sheet_height == 'auto'):
@@ -44,7 +44,7 @@ def bucky(polygon, square_size, square_margin, fill_type='face', margin = {'left
     else:
         height_in = sheet_height - margin['top'] - margin['bottom']
         rows = int(height_in/ inches)
-    print "Generating polygon %s, side %s, for sheet size %f x %f inches" % (polygon, side, sheet_size[0], sheet_height)
+    print ("Generating polygon %s, side %s, for sheet size %f x %f inches" % (polygon, side, sheet_size[0], sheet_height))
     blocks_at_a_time = rows * cols
     images = []
     sheet = 0
@@ -55,9 +55,9 @@ def bucky(polygon, square_size, square_margin, fill_type='face', margin = {'left
         
     for b in range(0, len(all_blocks), blocks_at_a_time):
         last_block = b + blocks_at_a_time - 1
- 	if (last_block >= len(all_blocks)):
- 	    last_block = len(all_blocks) - 1
-	blocks = all_blocks[slice(b, last_block+1)]
+        if (last_block >= len(all_blocks)):
+            last_block = len(all_blocks) - 1
+        blocks = all_blocks[slice(b, last_block+1)]
         if (fill_type == 'face'):
             polygons = face_polygons
         else:
