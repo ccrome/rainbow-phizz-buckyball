@@ -44,7 +44,7 @@ def bucky(polygon, square_size, square_margin, fill_type='face', margin = {'left
     else:
         height_in = sheet_height - margin['top'] - margin['bottom']
         rows = int(height_in/ inches)
-    print ("Generating polygon %s, side %s, for sheet size %f x %f inches" % (polygon, side, sheet_size[0], sheet_height))
+    print(("Generating polygon %s, side %s, for sheet size %f x %f inches" % (polygon, side, sheet_size[0], sheet_height)))
     blocks_at_a_time = rows * cols
     images = []
     sheet = 0

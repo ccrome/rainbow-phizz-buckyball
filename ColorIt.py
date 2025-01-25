@@ -550,7 +550,7 @@ polygons = {
 
 
 def get_polygons():
-    return polygons.keys()
+    return list(polygons.keys())
 
 def contains(str_arr, string):
     for s in str_arr:
@@ -589,7 +589,7 @@ def color_string(color):
 
 def print_edges(edges):
     for edge in edges:
-        print (" ".join(edge))
+        print((" ".join(edge)))
 
 def correct(p):
     result = []
@@ -720,7 +720,7 @@ def write_adjacency_matrix(polygon_name, file_name):
                 count = count + 1
         else:
             result = "Error in ColorIt::write_adjacency_matrix.  Couldn't get the matrix for some reason.";
-            print (fh, result)
+            print((fh, result))
         fh.close()
     else:
         result = "Couldn't open %s for writing." % file_name;
@@ -742,11 +742,11 @@ def write_adjacency_matrix(polygon_name, file_name):
                     n1 = n2
                     n2 = t
                 tracker["%d %d" % (n1, n2)] = [n1, n2, "%d -- %d;\n" % (n1, n2)]
-        l = tracker.keys()
+        l = list(tracker.keys())
         
         fh_neato1.write("graph G1 {\n")
         tracker2 = {}
-        for x in sorted(tracker.keys(), key=functools.cmp_to_key(numeric)):
+        for x in sorted(list(tracker.keys()), key=functools.cmp_to_key(numeric)):
             n1, n2, s = tracker[x]
             tracker2[n1] = 1
             tracker2[n2] = 1
@@ -765,7 +765,7 @@ def write_adjacency_matrix(polygon_name, file_name):
  
         fh_neato2.write("graph G1 {\n")
         tracker2 = {}
-        for x in sorted(tracker.keys(), key=functools.cmp_to_key(numeric)):
+        for x in sorted(list(tracker.keys()), key=functools.cmp_to_key(numeric)):
             n1, n2, s = tracker[x]
             tracker2[n1] = 1
             tracker2[n2] = 1

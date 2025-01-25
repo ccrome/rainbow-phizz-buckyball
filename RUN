@@ -1,5 +1,5 @@
 #!/bin/sh
-python2.7 origami_buckyball.py
+python origami_buckyball.py
 neato -Tpng -o dodecahedron_adjacency_matrix.txt_2.neato.png dodecahedron_adjacency_matrix.txt_2.neato
 neato -Tpng -o dodecahedron_adjacency_matrix.txt_1.neato.png dodecahedron_adjacency_matrix.txt_1.neato
 neato -Tpng -o buckyball_adjacency_matrix.txt_2.neato.png buckyball_adjacency_matrix.txt_2.neato
